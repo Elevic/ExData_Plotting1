@@ -1,0 +1,17 @@
+#Plot 4
+setwd("/Users/fabiola/Desktop/datasciencecoursera/Course4-Data analysis/")
+mydf<-read.table("household_power_consumption.txt", sep = ";", header = TRUE, stringsAsFactors = TRUE)
+tabla_fil <-filter(tabla1, Date =="1/2/2007" | Date=="2/2/2007")
+tabla_fil$datetime <- dmy_hms(apply(tabla_fil[,1:2], 1, paste, collapse=" "))
+png(filename = "plot4", width = 480, height = 480)
+par(mfrow = c(2,2), mar = c(4,4,2,1))
+with(tabla_fil, plot(datetime,as.numeric(as.character(Global_active_power)), type = "l", ylab = "Global Active Power (kilowatts"), xlab= NULL)
+ with(tabla_fil, plot(datetime,as.numeric(as.character(Voltage)), type = "l", ylab = "Voltage"), xlab= NULL)
+with(tabla_fil, plot(datetime,as.numeric(as.character(Sub_metering_1)), col="black", type="l", ylab ="Energy sub metering"))
+lines(tabla_fil$datetime, as.numeric(as.character(tabla_fil$Sub_metering_2)), col="red")
+lines(tabla_fil$datetime, as.numeric(as.character(tabla_fil$Sub_metering_3)), col="blue")
+legend("topright", lty = 1, col = c("black", "red", "blue"), legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"))
+with(tabla_fil, plot(datetime,as.numeric(as.character(Global_reactive_power)), type = "l", ylab = "Global_reactive_power"), xlab= NULL)
+mtext("Plot 4", outer = TRUE)
+dev.off()
+     
